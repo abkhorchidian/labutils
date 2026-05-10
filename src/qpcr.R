@@ -7,8 +7,8 @@ plate_96  <- list(n_rows = 8,  n_cols = 12, point_size = 10, text_size = 3)
 plate_384 <- list(n_rows = 16, n_cols = 24, point_size = 5,  text_size = 1.5)
 
 #____________PLATE PLOTS____________
-plotplate <- function(plate, format = plate_6, columns="columns", rows="rows", mastermix="mastermix", sample_ID="sample_ID", fill_label="Target") {
-  ggplot(plate, aes(x = columns, y = rows)) +
+plotplate <- function(platename, format, columns="columns", rows="rows", mastermix="mastermix", sample_ID="sample_ID", fill_label="Target") {
+  ggplot(platename, aes(x = columns, y = rows)) +
     geom_point(aes(fill=.data[[mastermix]]), shape = 21, size = format$point_size) +
     geom_text(aes(label=.data[[sample_ID]]), size = format$text_size) +
     scale_y_reverse(breaks = 1:format$n_rows, labels = LETTERS[1:format$n_rows]) +
@@ -25,6 +25,6 @@ plotplate <- function(plate, format = plate_6, columns="columns", rows="rows", m
 }
 
 #Usage
-#plotplate(my_data, format = plate_6)
-#plotplate(my_data, format = plate_96)
-#plotplate(my_data, format = plate_384, fill_label = "Condition")
+#plotplate(tc_plate1, format = plate_6)
+#plotplate(qpcr_plate1, format = plate_96)
+#plotplate(qpcr_plate2, format = plate_384, fill_label = "Condition")

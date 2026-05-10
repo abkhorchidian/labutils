@@ -4,3 +4,4 @@
 .Ruserdata
 .positai
 .DS_Store
+src/make-pkg.R

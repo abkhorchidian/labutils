@@ -1,6 +1,9 @@
+libraries <- c("knitr", "kableExtra", "tidyverse", "devtools", "roxygen2", "testthat")
+invisible(lapply(libraries, library, character.only=TRUE))
+
 #The aim of the functions in this script is to control and accelerate the process of consolidating and querying experimental data from instruments which quantify nucleic acids (NucAs), from within a Quarto template. These functions enable a user to download, wrangle, consolidate, and query data from the Nanodrop and Qubit 2.0 instruments. Since these instruments export data in a consistently named directory, the data can be detected on connected USB volumes and instrument provenance automatically attributed. Since the instruments also export data in a consistent format, a static data wrangling pipeline can be automatically applied. Processed data are then consolidated as observations in a 'tidy' (Wickham, JOSS, 2019) .rds file. To facilitate instantaneous querying of the NucA content of laboratory samples, data are queried with a sample type and a type-unique ID. All functions in this script share the common prefix 'NucAqnt', shorthand for 'nucleic acid quantitation'.
 
-#----------Auto-detect instrument from connected USB volumes. The Qubit 2.0 always exports data in a folder named with the current year and month expressed in a regular expression (e.g. "2026 4"). Similarly, the Nanodrop always exports data in a folder name "NanodropOne_AZY1601167". Furthermore, data from these instruments are always pulled with the same, but separate, USB drives. Therefore, when called, this function can auto-detect DNA quantitation data and determine instrument provenance using static directories. ----------
+#----------Auto-detect instrument from connected USB volumes. The Qubit 2.0 always exports data in a folder named with the current year and month, regularly expressed (e.g. "2026 4"). Similarly, the Nanodrop always exports data in a folder name "NanodropOne_AZY1601167". Furthermore, data from these instruments are always pulled with the same, but separate, USB drives. Therefore, when called, this function can auto-detect DNA quantitation data and determine instrument provenance using static directories. ----------
 NucAqnt.instrument_detect <- function() {
   qubit_folder <- file.path("/Volumes/USB DISK", paste(format(Sys.Date(), "%Y"), as.integer(format(Sys.Date(), "%m"))))
   nanodrop_folder <- "/Volumes/NO NAME/NanodropOne_AZY1601167"
@@ -112,6 +115,7 @@ NucAqnt.query <- function(type = c("plasmid", "fragment", "gDNA", "RNA"), ID) {
       qubit_sd = round(sd(qubit.conc, na.rm = TRUE), 0),
       qubit_conc_units = first(na.omit(qubit.conc.units)),
       qubit_cv = round((qubit_sd / qubit_mean) * 100, 0),
+      nanodrop_mean =  mean(nanodrop.conc.ng.uL, na.rm = TRUE),
       A260_A280_mean = round(mean(A260.A280, na.rm = TRUE), 2),
       A260_A280_sd = round(sd(A260.A280, na.rm = TRUE), 2),
       A260_A280_cv = round((A260_A280_sd / A260_A280_mean) * 100, 2),
