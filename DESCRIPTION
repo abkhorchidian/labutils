@@ -1,0 +1,10 @@
+Package: ghevaertutils
+Title: A collection of functions used by the Ghevaert group to enable and accelerate data processing, visualisation, and modelling after in-house or third-party acquisition.
+Version: 0.1.1
+Authors@R: 
+    person("Aramis Benjamin", "Khorchidian", , "aramiskhorchidian@gmail.com", role = c("aut", "cre"))
+Description: The Ghevaert group use these functions to detect and download data acquired using in-house and third-party instruments. Calling these functions data are downloaded, wrangled, controlled for quality, visualised, deposited into repositories, and used to develop and fit models. Read more about the work of the Ghevaert group at https://www.stemcells.cam.ac.uk/people/pi/ghevaert.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 8.0.0
